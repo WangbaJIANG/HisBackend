@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.his.mapper.CheckRequestMapper">
+    <insert id="addCheckRequest" parameterType="CheckRequest" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into check_request
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="registerId!=null">
+                register_id,
+            </if>
+            <if test="medicalTechnologyId!=null">
+                medical_technology_id,
+            </if>
+            <if test="checkInfo!=null and checkInfo!=''">
+                check_info,
+            </if>
+            <if test="checkPosition!=null and checkPosition!=''">
+                check_position,
+            </if>
+            <if test="creationTime!=null">
+                creation_time,
+            </if>
+            <if test="checkEmployeeId!=null and checkEmployeeId!=''">
+                check_employee_id,
+            </if>
+            <if test="inputcheckEmployeeId!=null and inputcheckEmployeeId!=''">
+                inputcheck_employee_id,
+            </if>
+            <if test="checkTime!=null">
+                check_time,
+            </if>
+            <if test="checkResult!=null and checkResult!=''">
+                check_result,
+            </if>
+            <if test="checkState!=null and checkState!=''">
+                check_state,
+            </if>
+            <if test="checkRemark!=null and checkRemark!=''">
+                check_remark,
+            </if>
+
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+
+            <if test="registerId!=null">
+                #{registerId},
+            </if>
+            <if test="medicalTechnologyId!=null">
+                #{medicalTechnologyId},
+            </if>
+            <if test="checkInfo!=null and checkInfo!=''">
+                #{checkInfo},
+            </if>
+            <if test="checkPosition!=null and checkPosition!=''">
+                #{checkPosition},
+            </if>
+            <if test="creationTime!=null">
+                #{creationTime},
+            </if>
+            <if test="checkEmployeeId!=null and checkEmployeeId!=''">
+                #checkEmployeeId},
+            </if>
+            <if test="inputcheckEmployeeId!=null and inputcheckEmployeeId!=''">
+                #{inputcheckEmployeeId},
+            </if>
+            <if test="checkTime!=null">
+                #{checkTime},
+            </if>
+            <if test="checkResult!=null and checkResult!=''">
+                #{checkResult},
+            </if>
+            <if test="checkState!=null and checkState!=''">
+                #{checkState},
+            </if>
+            <if test="checkRemark!=null and checkRemark!=''">
+                #{checkRemark},
+            </if>
+
+    </trim>
+    </insert>
+
+    <select id="findCheckRequestByRegisterId" parameterType="int" resultType="ExpenseChargeVo">
+        select cr.id, mt.tech_name,mt.tech_price,mt.tech_type,cr.creation_time
+        from check_request cr join medical_technology mt on cr.medical_technology_id=mt.id
+        where register_id=#{value} and check_state='已开立' order by cr.creation_time desc
+    </select>
+    <!--更新状态-->
+    <update id="updateStateById" >
+        update check_request set check_state=#{state} where id=#{id}
+    </update>
+
+    <select id="findPatientCount">
+        select count(*)
+        from register r, (select distinct register_id rid from check_request
+        where check_state=#{state} and DATE(creation_time)=DATE(NOW())) t
+        where r.id=t.rid
+    </select>
+
+    <select id="findPatient">
+        select r.*
+        from register r, (select distinct register_id rid from check_request
+        where check_state='已缴费' and DATE(creation_time)=DATE(NOW()) ) t
+        where r.id=t.rid
+
+            <if test="realName!=null and realName!=''">
+                and real_name=#{realName}
+            </if>
+            <if test="caseNumber!=null and caseNumber!=''">
+                and case_number=#{caseNumber}
+            </if>
+
+    </select>
+
+    <update id="patientCheckApply">
+        update check_request set check_state='已检查' where id=#{id}
+
+    </update>
+
+    <select id="findCheckList" parameterType="medicalTechnology">
+        SELECT * from medical_technology where id in(select medical_technology_id
+        from check_request
+        where register_id=#{registerId} and check_state='已缴费')
+
+    </select>
+
+    <select id="findCheckDepartmentByTechType">
+        select * from department where dept_type=#{techType}
+    </select>
+    <select id="findDoctorByDeptId">
+        select * from employee
+        where deptment_id in (select id from department where dept_name=#{deptName})
+    </select>
+
+    <update id="checkPatient">
+        update check_request set check_employee_id=#{employeeId} ,check_state='执行完成'
+        where register_id=#{id} and medical_technology_id=#{techId}
+
+    </update>
+</mapper>

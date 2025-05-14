@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.his.mapper.RegistLevelMapper">
+    <select id="findRegistLevelAll" resultType="RegistLevel">
+        select * from regist_level  where delmark=1
+    </select>
+    <select id="findLevelById" parameterType="int" resultType="RegistLevel">
+        select * from regist_level where delmark = 1 AND id = #{value}
+    </select>
+</mapper>

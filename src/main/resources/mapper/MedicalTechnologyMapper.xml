@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.his.mapper.MedicalTechnologyMapper">
+    <select id="findMedicalTechnologyByIdAndName" resultType="MedicalTechnology">
+    select * from medical_technology
+        <where>
+            <if test="techCode!=null and techCode!=''">
+               and tech_code=#{techCode}
+            </if>
+            <if test="techName!=null and techName!=''">
+                and  tech_name like '%${techName}%'
+            </if>
+            <if test="techType!=null and techType!=''">
+                and tech_type like '%${techType}%'
+            </if>
+
+        </where>
+        limit 0,5
+    </select>
+</mapper>

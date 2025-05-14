@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.his.mapper.EmployeeMapper">
+    <select id="findEmpByDeptIdAndLevelId" resultType="Employee">
+        select * from employee
+      <where>
+          <if test="deptmentId!=null">
+             and deptment_id=#{deptmentId}
+          </if>
+          <if test="registLevelId!=null">
+             and regist_level_id=#{registLevelId}
+          </if>
+      </where>
+    </select>
+    <resultMap id="findEmpByNameAndPswMap" type="Employee">
+        <id column="e_id" property="id"/>
+        <result column="realname" property="realname"/>
+        <result column="password" property="password"/>
+        <result column="deptment_id" property="deptmentId"/>
+        <result column="regist_level_id" property="registLevelId"/>
+        <result column="scheduling_id" property="schedulingId"/>
+        <result column="role" property="role"/>
+        <result column="delmark" property="delmark"/>
+        <collection property="permitList" ofType="Permit">
+            <id column="p_id" property="id"/>
+            <result column="permit_path" property="permitPath"/>
+            <result column="permit_name" property="permitName"/>
+            <result column="permit_icon" property="permitIcon"/>
+            <result column="permit_parent" property="permitParent"/>
+            <result column="relmark" property="relmark"/>
+        </collection>
+    </resultMap>
+    <select id="findEmpByNameAndPsw" parameterType="Employee" resultMap="findEmpByNameAndPswMap">
+        select e.id e_id,e.realname,e.password,e.deptment_id,e.regist_level_id,e.scheduling_id,e.role,e.delmark,
+        p.id p_id,p.permit_path,p.permit_name,p.permit_icon,p.permit_parent,p.relmark
+        from employee e join role_permit rp on  e.role=rp.role_id
+        join permit p on rp.permit_id=p.id
+        where realname=#{realname} and password=#{password} and permit_parent is null and delmark='1'
+    </select>
+</mapper>

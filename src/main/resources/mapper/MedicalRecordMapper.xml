@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.his.mapper.MedicalRecordMapper">
+    <insert id="saveMedicalRecord" parameterType="MedicalRecord" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into medical_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="techId!=null">
+                techId,
+            </if>
+            <if test="registerId!=null">
+                register_id,
+            </if>
+            <if test="present!=null and present !=''">
+                present,
+            </if>
+            <if test="presentTreat!=null and presentTreat !=''">
+                present_treat,
+            </if>
+            <if test="history!=null and history !=''">
+                history,
+            </if>
+            <if test="allergy!=null and allergy !=''">
+                allergy,
+            </if>
+            <if test="physique!=null and physique !=''">
+                physique,
+            </if>
+            <if test="proposal!=null and proposal !=''">
+                proposal,
+            </if>
+            <if test="careful!=null and careful !=''">
+                careful,
+            </if>
+            <if test="diagnosis!=null and diagnosis !=''">
+                diagnosis,
+            </if>
+            <if test="cure!=null and cure !=''">
+                cure,
+            </if>
+
+
+
+
+        </trim>
+        values
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+
+          <if test="id!=null">
+              #{id},
+          </if>
+          <if test="registerId!=null">
+              #{registerId},
+          </if>
+          <if test="present!=null and present !=''">
+              #{present},
+          </if>
+          <if test="presentTreat!=null and presentTreat !=''">
+              #{presentTreat},
+          </if>
+          <if test="history!=null and history !=''">
+              #{history},
+          </if>
+          <if test="allergy!=null and allergy !=''">
+              #{allergy},
+          </if>
+          <if test="physique!=null and physique !=''">
+              #{physique},
+          </if>
+          <if test="proposal!=null and proposal !=''">
+              #{proposal},
+          </if>
+          <if test="careful!=null and careful !=''">
+              #{careful},
+          </if>
+          <if test="diagnosis!=null and diagnosis !=''">
+              #{diagnosis},
+          </if>
+          <if test="cure!=null and cure !=''">
+              #{cure},
+          </if>
+      </trim>
+
+    </insert>
+
+</mapper>
