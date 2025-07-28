@@ -62,4 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService
 
         }
 
+    @Override
+    public Employee findEmpByEmpId(Integer empId) {
+        return employeeMapper.findEmpByEmpId(empId);
+    }
+
+
 }

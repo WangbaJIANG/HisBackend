@@ -59,4 +59,9 @@ public class RegisterController {
         registerService.findPatientByempId1( pageNum,pageSize, employeeId, caseNumber, realName);
         return Result.ok();
     }
+    @RequestMapping("findPatientByempIdAndState")
+    public  Result findPatientByempIdAndState(Integer pageNum,Integer pageSize,Integer employeeId,String caseNumber,String realName){
+
+        return Result.ok(   registerService.findPatientByempIdAndState  ( pageNum,pageSize, employeeId, caseNumber, realName));
+    }
 }

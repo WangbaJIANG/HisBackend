@@ -16,4 +16,5 @@ public interface RegisterService {
     Register findPatientByCondition (String caseNumber,String realName);
     PageInfo<Register> findPatientByempId1(Integer current, Integer page, Integer employeeId, String caseNumber, String realName);
 
+    PageInfo<Register> findPatientByempIdAndState(Integer pageNum, Integer pageSize, Integer employeeId, String caseNumber, String realName);
 }

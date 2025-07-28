@@ -27,4 +27,9 @@ public class MedicalRecordContrller {
         medicalRecordService.saveMedicalRecord(medicalRecord);
         return Result.ok();
     }
+    @RequestMapping("/saveDiagnosis")
+    public Result saveDiagnosis(String cure,String diagnosis,Integer registerId)
+    {medicalRecordService.saveDiagnosis(cure,diagnosis,registerId);
+        return Result.ok();
+    }
 }

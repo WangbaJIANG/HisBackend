@@ -29,6 +29,8 @@ public class Register {
 
     private List<ExpenseChargeVo> voList;
 
+
+
     public List<ExpenseChargeVo> getVoList() {
         return voList;
     }
@@ -68,6 +70,7 @@ public class Register {
     public void setRegistMethod(String registMethod) {
         this.registMethod = registMethod;
     }
+
 
     @Override
     public String toString() {

@@ -1,5 +1,8 @@
 package com.neuedu.his.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -9,10 +12,13 @@ public class CheckRequest {
     private Integer medicalTechnologyId;
     private String checkInfo;
     private String checkPosition;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "GMT+8")
     private Date creationTime;
     private  Integer checkEmployeeId;
     private  Integer inputcheckEmployeeId;
-    private  Date checkTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "GMT+8")
+
+    private Date checkTime;
     private  String checkResult;
     private String checkState;
     private String checkRemark;

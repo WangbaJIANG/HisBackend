@@ -39,4 +39,8 @@
         join permit p on rp.permit_id=p.id
         where realname=#{realname} and password=#{password} and permit_parent is null and delmark='1'
     </select>
+
+    <select id="findEmpByEmpId">
+        select * from employee where id=#{empId}
+    </select>
 </mapper>

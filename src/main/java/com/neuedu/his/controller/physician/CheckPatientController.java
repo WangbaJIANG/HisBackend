@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/checkPatient")
@@ -28,8 +30,11 @@ public class CheckPatientController {
     }
 
     @RequestMapping("/checkPatient")
-        Result checkPatient(Integer employeeId,Integer techId,Integer id){
-        checkApplyService.checkPatient(employeeId,techId,id);
+        Result checkPatient(Integer employeeId, Integer techId, Integer id,
+                            Date checkTime, Integer checkEmployeeId, String checkInfo,
+                            String  checkPosition, Integer inputcheckEmployeeId, String checkRemark,String checkState,String checkResult){
+        checkApplyService.checkPatient(employeeId,techId,id,checkTime,checkEmployeeId,checkInfo,
+                checkPosition,inputcheckEmployeeId,checkRemark,checkState,checkResult);
         return Result.ok();
     }
 }

@@ -7,4 +7,7 @@ import java.util.List;
 public interface EmployeeService {
     List<Employee> findEmpByDeptIdAndLevelId(Employee emp);
     Employee  findEmpByNameAndPsw(String realname,String password);
+
+    Employee findEmpByEmpId(Integer empId);
+
 }

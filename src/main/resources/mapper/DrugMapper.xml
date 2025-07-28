@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.his.mapper.DrugMapper">
+    <select id="findDrugByNameAndCode" resultType="Drug">
+        select * from drug_info
+        <where>
+            <if test="drugName!=null and drugName!=''">
+             drug_name like '%${drugName}%'
+
+            </if>
+            <if test="mnemonicCode!=null and mnemonicCode!=''">
+                mnemonic_code=#{mnemonicCode}
+
+            </if>
+        </where>
+        limit 0,8
+    </select>
+
+        <insert id="saveDrugPrescription">
+    insert  into prescription
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="registerId!=null">
+                register_id,
+            </if>
+            <if test="drugId!=null">
+                drug_id,
+            </if>
+            <if test="drugUsage!=null">
+               drug_usage,
+            </if>
+            <if test="drugNumber!=null">
+                drug_number,
+            </if>
+            <if test="creationTime!=null">
+                creation_time,
+            </if>
+            drug_state
+
+
+
+        </trim>
+        values
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="registerId!=null">
+                #{registerId},
+            </if>
+            <if test="drugId!=null">
+                #{drugId},
+            </if>
+            <if test="drugUsage!=null">
+                #{drugUsage},
+            </if>
+            <if test="drugNumber!=null">
+                #{drugNumber},
+            </if>
+            <if test="creationTime!=null">
+                #{creationTime},
+            </if>
+           '未发'
+
+
+
+        </trim>
+
+    </insert>
+
+    <select id="findPatientByNameAndCase">
+        select * from register
+        <where>
+            <if test="realName!=null and realName!=''">
+                real_name like '%${realName}%'
+            </if>
+            <if test="caseNumber!=null">
+                case_number=#{caseNumber}
+            </if>
+        </where>
+    </select>
+    
+    <select id="findPatientWithDrug">
+        SELECT DISTINCT ri.*, pr.drug_id, pr.drug_state
+        FROM register ri
+        JOIN prescription pr ON ri.id = pr.register_id
+        WHERE pr.drug_id IS NOT NULL
+        AND pr.drug_state = '未发'
+        <if test="caseNumber!=null and caseNumber!=''">
+            and case_number=#{caseNumber}
+        </if>
+        <if test="realName!=null and realName!=''">
+            and real_name=#{realName}
+        </if>
+    </select>
+
+    <select id="findDrugWithRegisterId">
+        select * from  drug_info di JOIN  prescription pr on di.id=pr.drug_id where drug_state='未发'
+        <if test="registerId!=null and registerId!=''">
+           and register_id=#{registerId}
+        </if>
+    </select>
+
+    <update id="sendDrug">
+        update prescription set drug_state=#{drugState} where register_id=#{registerId} and drug_id=#{drugId}
+    </update>
+</mapper>

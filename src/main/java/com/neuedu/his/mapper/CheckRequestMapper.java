@@ -3,8 +3,8 @@ package com.neuedu.his.mapper;
 import com.neuedu.his.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import com.neuedu.his.pojo.vo.ExpenseChargeVo;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -20,7 +20,15 @@ public void addCheckRequest(CheckRequest checkRequest);
     List<MedicalTechnology> findCheckList(Integer registerId);
     List<Departement>findCheckDepartmentByTechType(String techType);
     List<Employee> findDoctorByDeptId(String deptName);
-    void checkPatient(@RequestBody Integer employeeId, Integer techId, Integer id);
+
+    void checkPatient( Integer employeeId, Integer techId, Integer id,
+                      Date checkTime,Integer checkEmployeeId,String checkInfo,
+                      String  checkPosition,Integer inputcheckEmployeeId,String checkRemark,String checkState,String checkResult);
+
+    List<Register>findInputPatient(String realName,String caseNumber,String checkState);
+    List<MedicalTechnology>findInputCheck(Integer registerId);
 
 
+    List<MedicalTechnology> findCheckListAll(Integer registerId);
+    CheckRequest findCheckRequestByRegisterIdAll(Integer registerId, Integer techId);
 }

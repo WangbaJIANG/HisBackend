@@ -126,6 +126,14 @@
         where register_id=#{registerId} and check_state='已缴费')
 
     </select>
+    <select id="findCheckListAll" parameterType="medicalTechnology">
+        SELECT mt.*, cr.check_state,check_time
+        FROM check_request cr
+        JOIN medical_technology mt ON cr.medical_technology_id = mt.id
+        WHERE cr.register_id = #{registerId};
+
+
+    </select>
 
     <select id="findCheckDepartmentByTechType">
         select * from department where dept_type=#{techType}
@@ -136,8 +144,67 @@
     </select>
 
     <update id="checkPatient">
-        update check_request set check_employee_id=#{employeeId} ,check_state='执行完成'
+        update check_request
+        <set>
+
+            <if test="employeeId!=null and employeeId!='' ">
+                check_employee_id=#{employeeId},
+            </if>
+            <if test="checkState!=null and checkState!='' ">
+                check_state=#{checkState},
+            </if>
+
+            <if test="checkInfo!=null and checkInfo!='' ">
+                check_info=#{checkInfo},
+            </if>
+            <if test="checkPosition!=null and checkPosition!='' ">
+                check_position=#{checkPosition},
+            </if>
+
+            <if test="inputcheckEmployeeId!=null">
+                inputcheck_employee_id=#{inputcheckEmployeeId},
+            </if>
+            <if test="checkTime!=null">
+                check_time=#{checkTime},
+            </if>
+            <if test="checkRemark!=null">
+                check_remark=#{checkRemark},
+            </if>
+            <if test="checkResult!=null and checkResult!=''">
+                check_result=#{checkResult},
+            </if>
+
+
+
+        </set>
         where register_id=#{id} and medical_technology_id=#{techId}
 
     </update>
+    <select id="findInputPatient">
+        select r.*
+        from register r, (select distinct register_id rid from check_request
+        where
+        <if test="checkState!=null and checkState!=''">
+        check_state=#{checkState} and
+                 </if>
+       DATE(creation_time)=DATE(NOW()) ) t
+        where r.id=t.rid
+
+        <if test="realName!=null and realName!=''">
+            and real_name=#{realName}
+        </if>
+        <if test="caseNumber!=null and caseNumber!=''">
+            and case_number=#{caseNumber}
+        </if>
+
+    </select>
+    <select id="findInputCheck">
+        select * from medical_technology where id IN (select medical_technology_id
+        from check_request
+        where register_id=#{registerId} and check_state='执行完成')
+    </select>
+    <select id="findCheckRequestByRegisterIdAll">
+       select * from check_request where register_id=#{registerId} and medical_technology_id=#{techId}
+    </select>
+
 </mapper>

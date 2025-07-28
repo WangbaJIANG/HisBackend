@@ -69,4 +69,19 @@ public class RegisterServiceImpl implements RegisterService {
         PageInfo<Register>pageInfo=new PageInfo<>(registerList);
         return pageInfo;
     }
+
+    @Override
+    public PageInfo<Register> findPatientByempIdAndState(Integer pageNum, Integer pageSize, Integer employeeId, String caseNumber, String realName) {
+        Register register =new Register();
+        //封装分页数据
+        PageHelper.startPage(pageNum,pageSize);
+        //查询数据
+
+        register.setEmployeeId(employeeId);
+        register.setCaseNumber(caseNumber);
+        register.setRealName(realName);
+        List<Register> registerList = registerMapper.findPatientByempIdAndState(register);
+        PageInfo<Register>pageInfo=new PageInfo<>(registerList);
+        return pageInfo;
+    }
 }

@@ -23,4 +23,5 @@ public interface RegisterMapper {
 
     Register findPatientByCondition(String caseNumber, String realName);
     Register findPatientByempId1(Register register);
+    List<Register> findPatientByempIdAndState(Register register);
 }

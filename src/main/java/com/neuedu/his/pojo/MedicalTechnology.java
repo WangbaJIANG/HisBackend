@@ -1,5 +1,7 @@
 package com.neuedu.his.pojo;
 
+import java.util.Date;
+
 public class MedicalTechnology {
     private  Integer id;
     private String techCode;
@@ -9,6 +11,24 @@ public class MedicalTechnology {
     private String techType;
     private String priceType;
     private  Integer deptmentId;
+    private String checkState;
+    private Date checkTime;
+
+    public Date getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(Date checkTime) {
+        this.checkTime = checkTime;
+    }
+
+    public String getCheckState() {
+        return checkState;
+    }
+
+    public void setCheckState(String checkState) {
+        this.checkState = checkState;
+    }
 
     public Integer getId() {
         return id;

@@ -33,4 +33,10 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         }
 
     }
+
+    @Override
+    public Integer saveDiagnosis(String cure, String diagnosis, Integer registerId) {
+        medicalRecordMapper.saveDiagnosis(cure,diagnosis,registerId);
+        return 0;
+    }
 }

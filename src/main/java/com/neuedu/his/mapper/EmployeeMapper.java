@@ -11,4 +11,5 @@ public interface EmployeeMapper {
     Employee findEmpByNameAndPsw(Employee employee);
 
 
+    Employee findEmpByEmpId(Integer empId);
 }

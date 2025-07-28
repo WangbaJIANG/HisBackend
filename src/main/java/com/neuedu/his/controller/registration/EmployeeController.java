@@ -21,5 +21,9 @@ public class EmployeeController {
         return Result.ok(employeeService.findEmpByDeptIdAndLevelId(emp));
 
     }
+    @RequestMapping("/findEmpByEmpId")
+    public  Result findEmpByEmpId(Integer empId){
+        return Result.ok(employeeService.findEmpByEmpId(empId));
+    }
 
 }

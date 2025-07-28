@@ -32,4 +32,16 @@ public class CheckApplyController {
     Result findCheckList(Integer registerId){
       return Result.ok(  checkApplyService.findCheckList(registerId));
     }
+
+    @RequestMapping("/findCheckListAll")
+    Result findCheckListAll(Integer registerId){
+        return Result.ok(  checkApplyService.findCheckListAll(registerId));
+    }
+
+        @RequestMapping("/findCheckRequestByRegisterIdAll")
+    Result findCheckRequestByRegisterIdAll(Integer registerId,Integer techId){
+
+        return Result.ok(checkApplyService.findCheckRequestByRegisterIdAll(registerId,techId));
+    }
+
 }

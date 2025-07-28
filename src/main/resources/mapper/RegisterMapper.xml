@@ -53,4 +53,15 @@
         </if>
         order by visit_date
     </select>
+    <select id="findPatientByempIdAndState" resultType="register" parameterType="register">
+    select * from register where employee_id=#{employeeId}
+    <if test="realName != null and realName != ''">
+        and real_name like CONCAT('%', #{realName}, '%')
+    </if>
+    <if test="caseNumber != null and caseNumber != ''">
+        and case_number like CONCAT('%', #{caseNumber}, '%')
+    </if>
+    order by visit_date
+</select>
+
 </mapper>

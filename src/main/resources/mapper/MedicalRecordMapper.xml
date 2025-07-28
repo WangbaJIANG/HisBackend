@@ -9,8 +9,8 @@
             <if test="id!=null">
                 id,
             </if>
-            <if test="techId!=null">
-                techId,
+            <if test="readme!=null and readme!=''">
+                readme,
             </if>
             <if test="registerId!=null">
                 register_id,
@@ -53,6 +53,9 @@
           <if test="id!=null">
               #{id},
           </if>
+          <if test="readme!=null and readme!=''">
+              #{readme},
+          </if>
           <if test="registerId!=null">
               #{registerId},
           </if>
@@ -86,5 +89,18 @@
       </trim>
 
     </insert>
+    
+    <update id="saveDiagnosis">
+        update medical_record
+        <set>
+            <if test="diagnosis!=null and diagnosis!=''">
+                diagnosis=#{diagnosis},
+            </if>
+            <if test="cure!=null and cure!=''">
+                cure=#{cure},
+            </if>
+        </set>
+        where register_id=#{registerId}
+    </update>
 
 </mapper>

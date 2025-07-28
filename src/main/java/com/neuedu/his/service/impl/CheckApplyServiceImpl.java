@@ -3,14 +3,12 @@ package com.neuedu.his.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neuedu.his.mapper.CheckRequestMapper;
-import com.neuedu.his.pojo.Departement;
-import com.neuedu.his.pojo.Employee;
-import com.neuedu.his.pojo.MedicalTechnology;
-import com.neuedu.his.pojo.Register;
+import com.neuedu.his.pojo.*;
 import com.neuedu.his.service.check.CheckApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -56,10 +54,35 @@ public class CheckApplyServiceImpl implements CheckApplyService {
         return checkRequestMapper.findDoctorByDeptId(deptName);
     }
 
-    @Override
-    public void checkPatient(Integer employeeId, Integer techId, Integer id) {
 
-        checkRequestMapper.checkPatient(employeeId,techId,id);
+    @Override
+    public void checkPatient(Integer employeeId, Integer techId, Integer id,
+                             Date checkTime, Integer checkEmployeeId, String checkInfo,
+                             String checkPosition, Integer inputcheckEmployeeId, String checkRemark,String checkState,String checkResult) {
+        checkRequestMapper.checkPatient(employeeId,techId,id,checkTime,checkEmployeeId,checkInfo,
+                checkPosition,inputcheckEmployeeId,checkRemark,checkState,checkResult);
+    }
+
+    @Override
+    public List<Register> findInputPatient(String realName, String caseNumber,String checkState) {
+
+        return checkRequestMapper.findInputPatient(realName,caseNumber,checkState);
+    }
+
+    @Override
+    public List<MedicalTechnology> findInputCheck(Integer registerId) {
+        return checkRequestMapper.findInputCheck(registerId);
+    }
+
+    @Override
+    public List<MedicalTechnology> findCheckListAll(Integer registerId) {
+
+        return checkRequestMapper.findCheckListAll(registerId);
+    }
+
+    @Override
+    public CheckRequest findCheckRequestByRegisterIdAll(Integer registerId, Integer techId) {
+        return checkRequestMapper.findCheckRequestByRegisterIdAll(registerId,techId);
     }
 
 }
